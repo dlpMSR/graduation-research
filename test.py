@@ -2,6 +2,7 @@ from darkflow.net.build import TFNet
 import cv2
 import os
 import json
+import sys
 
 options = {"model":"./cfg/yolo.cfg","load": "./yolo.weights", "threshold": 0.25,"gpu":1}
 tfnet = TFNet(options)
