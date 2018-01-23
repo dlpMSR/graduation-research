@@ -3,9 +3,10 @@ import glob
 
 import test
 
-outputdirectry = './images_testing/output'
+inputdirectry = './images/images_testing/*.jpg'
+outputdirectry = './images/images_testing/output'
 
-for file in glob.glob('./images_testing/*.jpg'):
+for file in glob.glob(inputdirectry):
   name = os.path.basename(file)
   outputpass = os.path.join(outputdirectry,name)
 
