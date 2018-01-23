@@ -79,4 +79,6 @@ def resize(input_image,output_image):
 
 
 if __name__ == '__main__':
-  car_detection('./image04.jpg','./output/04/output01.jpg')
+  arg = sys.argv
+  car_detection(arg[1],arg[2])
+  
