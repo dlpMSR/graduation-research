@@ -4,8 +4,8 @@ import numpy as np
 
 kigou = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-with open('./images_testing2.json','r') as input:
-  with open('./images_testing22.csv','a') as output:
+with open('./images/test/output1.json','r') as input:
+  with open('./images/test/output1.csv','a') as output:
     json_dict = json.load(input)
     output.write('filename,number,A,B,mean_x,mean_y,median_x,median_y,variance_x,variance_y,stdev_x,stdev_y\n')
     for item in json_dict:

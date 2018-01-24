@@ -4,18 +4,21 @@ import os
 import json
 import sys
 
-options = {"model":"./cfg/yolo.cfg","load": "./yolo.weights", "threshold": 0.1,"gpu":0.0}
+options = {"model":"./cfg/yolo.cfg","load": "./yolo.weights", "threshold": 0.25,"gpu":0.0}
 tfnet = TFNet(options)
 kigou = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def car_detection(input_image,output_image):
   imgcv = cv2.imread('%s' % input_image)
-  output_dict = {"filename":os.path.basename(input_image),
-                 "label":0,
-                 "width":imgcv.shape[1],
-                 "height":imgcv.shape[0],
-                 "num_of_points":0}
-  
+  filename = os.path.basename(input_image)
+  output_dict = {
+                  "filename":filename,
+                  "label":0,
+                  "width":imgcv.shape[1],
+                  "height":imgcv.shape[0],
+                  "num_of_points":0
+                }
+                
   result = tfnet.return_predict(imgcv)
 
   num_of_points = 0
@@ -35,8 +38,9 @@ def car_detection(input_image,output_image):
       num_of_points += 1
       
       output_dict["num_of_points"] = num_of_points
-      dict_add = {"%s" % kigou[num_of_points - 1]:{"x":center_x,"y":center_y}}
-      output_dict.update(dict_add)
+      output_dict["%s" % kigou[num_of_points - 1]] = {"x":center_x,"y":center_y}
+      #dict_add =  {"%s" % kigou[num_of_points - 1]:{"x":center_x,"y":center_y}}
+      #output_dict.update(dict_add)
 
       cv2.rectangle(imgcv, (tlx, tly), (brx, bry), (0,0,255), 5)
       text = label + " " + ('%.2f' % conf)
@@ -47,12 +51,13 @@ def car_detection(input_image,output_image):
       pass
     
   cv2.imwrite('%s' % output_image, imgcv)
+  
+  return output_dict
+  #with open('./images/images_testing/output1.json','a+') as f:
+    #f.write(',\n')
+    #json.dump(output_dict, f, indent=4, separators=(',',':'))
 
-  with open('./images/images_testing/output1.json','a+') as f:
-    f.write(',\n')
-    json.dump(output_dict, f, indent=4, separators=(',',':'))
-
-  print('%s' % output_image)
+  #print('%s' % output_image)
 
 
 
