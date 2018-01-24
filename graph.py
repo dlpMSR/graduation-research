@@ -6,10 +6,8 @@ import matplotlib.pyplot as plt
 kigou = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def graph():
-    with open('./images/test/output1.json','r') as input:
+    with open('./images/images_testing/output1.json','r') as input:
         json_dict = json.load(input)
-
-        
 
         for item in json_dict:
             filename = item["filename"]
@@ -22,7 +20,7 @@ def graph():
             
             for i in range(count):
                 name, ext = os.path.splitext(filename)
-                outputpass = os.path.join('./images/test/graph','%s.png' % name)
+                outputpass = os.path.join('./images/images_testing/graph','%s.png' % name)
 
                 list_x.append(item[kigou[i]]["x"])
                 list_y.append(height - item[kigou[i]]["y"])

@@ -71,4 +71,3 @@ def resize(input_image,output_image):
 if __name__ == '__main__':
   arg = sys.argv
   car_detection(arg[1],arg[2])
-  

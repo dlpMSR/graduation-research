@@ -15,6 +15,6 @@ def rename(target_pass):
 
 
 if __name__ == '__main__':
-    target = './images/test/*.jpg'
+    target = './images/images_testing/*.jpg'
     rename(target)
   
