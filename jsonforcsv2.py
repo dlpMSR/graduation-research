@@ -4,26 +4,26 @@ import numpy as np
 
 kigou = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
-with open('./images/images_testing/output1.json','r') as input:
-  with open('./images/images_testing/output1.csv','a') as output:
+with open('./images/images_testing3/output/output1.json','r') as input:
+  with open('./images/images_testing3/output/output2.csv','a') as output:
     json_dict = json.load(input)
     output.write('filename,number,A,B,mean_x,mean_y,median_x,median_y,variance_x,variance_y,stdev_x,stdev_y\n')
     for item in json_dict:
       count = item["num_of_points"]
-      list_x = []
-      list_y = []
+      width = item["width"]
+      height = item["height"]
+      list_x = np.array([])
+      list_y = np.array([])
       for i in range(count):
-        list_x.append(item[kigou[i]]["x"])
-        list_y.append(item[kigou[i]]["y"])
+        list_x = np.append(list_x,item[kigou[i]]["x"])
+        list_y = np.append(list_y, height - item[kigou[i]]["y"])
+        #list_x.append(item[kigou[i]]["x"])
+        #list_y.append(height - item[kigou[i]]["y"])
       
       if len(list_x)==0:
         num_of_points = 0
-        #A = np.array([list_x,np.ones(len(list_x))])
-        #A = A.T
-        #a,b = np.linalg.lstsq(A,list_y)[0]
         a = 0
         b = 0
-
         mean_x = 0
         mean_y = 0
         median_x = 0
@@ -35,36 +35,36 @@ with open('./images/images_testing/output1.json','r') as input:
 
       elif len(list_x)==1:
         num_of_points = 1
-        #A = np.array([list_x,np.ones(len(list_x))])
-        #A = A.T
-        #a,b = np.linalg.lstsq(A,list_y)[0]
         a = 0
         b = 0
         variance_x = 0
         variance_y = 0
         stdev_x = 0
         stdev_y = 0
-
-        mean_x = mean(list_x)
-        mean_y = mean(list_y)
-        median_x = median(list_x)
-        median_y = median(list_y)
+        #mean_x = mean(list_x)
+        #mean_y = mean(list_y)
+        mean_x = np.mean(list_x)
+        mean_y = np.mean(list_y)
+        median_x = np.median(list_x)
+        median_y = np.median(list_y)
         
       else:
         num_of_points = len(list_x)
 
-        A = np.array([list_x,np.ones(len(list_x))])
-        A = A.T
-        a,b = np.linalg.lstsq(A,list_y)[0]
+        a, b = np.polyfit(list_x,list_y,1) 
 
-        mean_x = mean(list_x)
-        mean_y = mean(list_y)
-        median_x = median(list_x)
-        median_y = median(list_y)
-        variance_x = variance(list_x)
-        variance_y = variance(list_y)
-        stdev_x = stdev(list_x)
-        stdev_y = stdev(list_y)
+        #A = np.array([list_x,np.ones(len(list_x))])
+        #A = A.T
+        #a,b = np.linalg.lstsq(A,list_y)[0]
+
+        mean_x = np.mean(list_x)
+        mean_y = np.mean(list_y)
+        median_x = np.median(list_x)
+        median_y = np.median(list_y)
+        variance_x = np.var(list_x)
+        variance_y = np.var(list_y)
+        stdev_x = np.std(list_x)
+        stdev_y = np.std(list_y)
 
       output_string = item['filename'] +','+ \
                       str(num_of_points) +','+ \

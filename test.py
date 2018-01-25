@@ -36,6 +36,11 @@ def car_detection(input_image,output_image):
     label = item['label']
     conf = item['confidence']
 
+    #if label == 'bus' or label == 'truck':
+    #  tly = int(tly + (bry - tly)*0.3) 
+    #else:
+    #  pass
+
     center_x = int(tlx + (brx - tlx)/2)
     center_y = int(tly + (bry - tly)/2)
 
