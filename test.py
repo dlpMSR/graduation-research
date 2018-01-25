@@ -6,10 +6,11 @@ import math
 import json
 import sys
 
-options = {"model":"./cfg/yolo.cfg","load": "./yolo.weights", "threshold": 0.25,"gpu":0.0}
+options = {"model":"./cfg/yolo.cfg","load": "./yolo.weights", "threshold": 0.38,"gpu":1.0}
 tfnet = TFNet(options)
 kigou = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-threshold_distance = 200
+threshold_distance = 150
+threshold_size = 150
 
 def car_detection(input_image,output_image):
   imgcv = cv2.imread('%s' % input_image)
@@ -39,6 +40,7 @@ def car_detection(input_image,output_image):
     center_y = int(tly + (bry - tly)/2)
 
     dict_center = {'x':center_x,'y':center_y}
+    size = distance(tlx,tly,brx,bry)
 
     if label == 'car' or label == 'bus' or label == 'truck':
       if num_of_points == 0:
@@ -52,8 +54,8 @@ def car_detection(input_image,output_image):
           list_distance.append(distance_of_points)
         min_of_distance = min(list_distance)
 
-      if min_of_distance > threshold_distance:
-        print(min_of_distance)
+      if min_of_distance > threshold_distance and size > threshold_size:
+    
         num_of_points += 1
         list_center.append(dict_center)
         
@@ -86,6 +88,9 @@ def distance(x1,y1,x2,y2):
     yd = y2 - y1 
     distance = math.sqrt(pow(xd,2)+pow(yd,2))
     return distance
+
+
+
 
 
 
