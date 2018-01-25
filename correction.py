@@ -16,13 +16,9 @@ def correction():
                         x2 = item[moji[j]]['x']
                         y2 = item[moji[j]]['y']
                         distance(x1,y1,x2,y2)
-                        if distance < 20:
-                            
                         
-
-                print(item['filename'])
-
-
+                            
+            
 def distance(x1,y1,x2,y2):
     xd = x2 - x1
     yd = y2 - y1 
@@ -31,6 +27,12 @@ def distance(x1,y1,x2,y2):
 
 
 if __name__ == '__main__':
-    correction()
+    x1 = 548
+    y1 = 1464
+    x2 = 961
+    y2 = 1490
+    dist = distance(x1,y1,x2,y2)
+    print(dist)
+
 
     
