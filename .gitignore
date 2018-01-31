@@ -1,4 +1,5 @@
-darkflow-master/
+__pycache__/
+darkflow/
 sample1.jpg
 cfg/
 images/

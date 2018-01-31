@@ -1,22 +1,26 @@
+import os
 import json
-from statistics import mean, median,variance,stdev
 import numpy as np
 import math
 
 kigou = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
-def main():    
-  with open('./images/images_testing2/output/output1.json','r') as input:
-    with open('./images/images_testing2/output/output1.csv','a') as output:
+def main(target_directry):
+  path_json2 = os.path.join(target_directry,'output/output2.json')
+  path_csv = os.path.join(target_directry,'output/output.csv')
+
+  with open(path_json2,'r') as input:
+    with open(path_csv,'a') as output:
       json_dict = json.load(input)
 
-      output.write('filename,number,A,B,mean_x,mean_y,median_x,median_y,variance_x,\variance_y,stdev_x,stdev_y,range_x,center_x,range_y,center_y,ave_distance\n')
+      output.write('filename,number,A,B,mean_x,mean_y,median_x,median_y,variance_x,\variance_y,stdev_x,stdev_y,range_x,center_x,range_y,center_y,ave_distance,label\n')
 
       for item in json_dict:
         count = item["num_of_points"]
         width = item["width"]
         height = item["height"]
+        label = item["label"]
         list_x = np.array([])
         list_y = np.array([])
         for i in range(count):
@@ -69,7 +73,8 @@ def main():
                           str(center_x) +','+ \
                           str(range_y) +','+ \
                           str(center_y) +','+ \
-                          str(ave_distance) + '\n'
+                          str(ave_distance) +','+ \
+                          str(label) + '\n'
 
         output.write(output_string)
 
